@@ -33,11 +33,15 @@ function FeatureTwo() {
     try {
       setLoading(true); // Start loading
 
-      const response = await axios.post("http://localhost:4000/plant-health", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "https://nasa-space-app-backend.onrender.com/plant-health",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       const responseText = response.data.plantHealthSuggestions;
 

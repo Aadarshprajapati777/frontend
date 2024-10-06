@@ -25,9 +25,12 @@ function FarmerAssistant() {
       setLoading(true);
 
       // Send user message to the backend
-      const response = await axios.post("http://localhost:4000/mega-assistant", {
-        message: userMessage,
-      });
+      const response = await axios.post(
+        "https://nasa-space-app-backend.onrender.com/mega-assistant",
+        {
+          message: userMessage,
+        }
+      );
 
       // Append the assistant's response to the chat
       const assistantMessage = response.data.assistantMessage;

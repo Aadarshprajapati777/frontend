@@ -29,13 +29,13 @@ import navbarDarkCode from "layouts/sections/navigation/navbars/components/Navba
 function Navbars() {
   return (
     <BaseLayout
-      title="Navbars"
+      title="Farming Assistant - Plan Report"
       breadcrumb={[
         { label: "Page Sections", route: "/sections/navigation/navbars" },
-        { label: "Navbars" },
+        { label: "Plan" },
       ]}
     >
-      <View title="Navbar dark" code={navbarDarkCode}>
+      <View title="Plan Report" code={navbarDarkCode}>
         <MKBox py={6}>
           <NavbarDark />
         </MKBox>

@@ -17,7 +17,9 @@ const PlanReport = () => {
   const handleGenerateReport = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:4000/generate-plan-report");
+      const response = await axios.post(
+        "https://nasa-space-app-backend.onrender.com/generate-plan-report"
+      );
       const planReport = response.data.planReport;
 
       // Update chat messages with the generated report

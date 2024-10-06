@@ -10,7 +10,7 @@ import MKTypography from "components/MKTypography";
 import MKSocialButton from "components/MKSocialButton";
 
 // AgroMaster React examples
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+// import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import DefaultFooter from "examples/Footers/DefaultFooter";
 import FilledInfoCard from "examples/Cards/InfoCards/FilledInfoCard";
 
@@ -25,11 +25,11 @@ import Download from "pages/Presentation/sections/Download";
 import BuiltByDevelopers from "pages/Presentation/components/BuiltByDevelopers";
 
 // Routes
-import routes from "routes";
+// import routes from "routes";
 import footerRoutes from "footer.routes";
 
 // Images
-import bgImage from "assets/images/bg-presentation.jpg";
+import bgImage from "assets/images/banner.jpg";
 
 function Presentation() {
   const [weatherData, setWeatherData] = useState(null);
@@ -38,7 +38,7 @@ function Presentation() {
   // Function to fetch the user's location and get weather data
   const fetchWeatherData = (latitude, longitude) => {
     axios
-      .post("http://localhost:4000/init", {
+      .post("https://nasa-space-app-backend.onrender.com/init", {
         latitude,
         longitude,
       })
@@ -70,7 +70,7 @@ function Presentation() {
 
   return (
     <>
-      <DefaultNavbar
+      {/* <DefaultNavbar
         routes={routes}
         action={{
           type: "external",
@@ -79,7 +79,7 @@ function Presentation() {
           color: "info",
         }}
         sticky
-      />
+      /> */}
       <MKBox
         minHeight="75vh"
         width="100%"
@@ -176,7 +176,7 @@ function Presentation() {
                 description="Our Platform can easily integrate with your business and help you to grow."
                 action={{
                   type: "external",
-                  route: "https://www.creative-tim.com/learning-lab/react/overview/material-kit/",
+                  route: "https://aadarsh-prajapati.netlify.app/",
                   label: "Contact us for more information",
                 }}
               />
@@ -189,7 +189,7 @@ function Presentation() {
                 description="Save time with the included our Api's and Plugins that you can use in your project. Switch to premium version for more."
                 action={{
                   type: "external",
-                  route: "https://www.creative-tim.com/learning-lab/react/overview/datepicker/",
+                  route: "https://aadarsh-prajapati.netlify.app/",
                   label: "Read more",
                 }}
               />
@@ -202,7 +202,7 @@ function Presentation() {
                 description="We have a large community of contributors. We are always looking for new ideas and suggestions. Feel free to contribute."
                 action={{
                   type: "external",
-                  route: "https://www.creative-tim.com/learning-lab/react/alerts/material-kit/",
+                  route: "https://aadarsh-prajapati.netlify.app/",
                   label: "Read more",
                 }}
               />

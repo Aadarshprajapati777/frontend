@@ -49,7 +49,7 @@ function HeaderOne() {
 
     // Example request to backend
     axios
-      .post("http://localhost:4000/crop-suggestion", requestData)
+      .post("https://nasa-space-app-backend.onrender.com/crop-suggestion", requestData)
       .then((response) => {
         setCropSuggestions(response.data.cropSuggestions || response.data); // Handle the response as plain text
       })
