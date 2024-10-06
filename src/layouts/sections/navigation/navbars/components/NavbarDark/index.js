@@ -1,46 +1,119 @@
-/* eslint-disable no-param-reassign */
-/**
-=========================================================
-* AgroMaster React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+import React, { useState } from "react";
+import axios from "axios";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import ReactMarkdown from "react-markdown"; // Import react-markdown
 
 // AgroMaster React components
 import MKBox from "components/MKBox";
+import MKButton from "components/MKButton";
+import MKTypography from "components/MKTypography";
 
-// AgroMaster React examples
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+const PlanReport = () => {
+  const [loading, setLoading] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [reportData, setReportData] = useState("");
 
-// Routes
-import routes from "routes";
+  const handleGenerateReport = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post("http://localhost:4000/generate-plan-report");
+      const planReport = response.data.planReport;
 
-function NavbarDark() {
+      // Update chat messages with the generated report
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "user", text: "Generate farming plan report" },
+        { sender: "assistant", text: planReport },
+      ]);
+      setReportData(planReport);
+    } catch (error) {
+      console.error("Error fetching plan report:", error);
+      alert("Error generating plan report. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDownloadPDF = () => {
+    const input = document.getElementById("chat-box");
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("Farming-Plan-Report.pdf");
+    });
+  };
+
   return (
-    <MKBox variant="gradient" bgColor="dark" shadow="sm" py={0.25}>
-      <DefaultNavbar
-        routes={routes}
-        action={{
-          type: "external",
-          route: "https://www.creative-tim.com/product/material-kit-react",
-          label: "free download",
-          color: "info",
+    <MKBox component="section" py={6} px={3}>
+      <MKTypography variant="h4" mb={2} textAlign="center">
+        Farming Assistant - Plan Report
+      </MKTypography>
+
+      <MKBox
+        id="chat-box"
+        sx={{
+          backgroundColor: "#ffffff",
+          borderRadius: 2,
+          padding: "1.5rem",
+          minHeight: "400px",
+          overflowY: "auto",
+          boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+          marginBottom: "2rem",
         }}
-        transparent
-        relative
-        light
-        center
-      />
+      >
+        {chatMessages.map((message, index) => (
+          <div
+            key={index}
+            style={{
+              textAlign: message.sender === "user" ? "right" : "left",
+              marginBottom: "1rem",
+            }}
+          >
+            <MKTypography
+              variant="body1"
+              sx={{
+                display: "inline-block",
+                padding: "10px 20px",
+                backgroundColor: message.sender === "user" ? "#2196f3" : "#e0e0e0",
+                color: message.sender === "user" ? "#fff" : "#000",
+                borderRadius: "20px",
+                maxWidth: "80%",
+                wordWrap: "break-word",
+              }}
+            >
+              {message.sender === "assistant" ? (
+                <ReactMarkdown>{message.text}</ReactMarkdown> // Use react-markdown for assistant's message
+              ) : (
+                message.text
+              )}
+            </MKTypography>
+          </div>
+        ))}
+      </MKBox>
+
+      <MKBox textAlign="center">
+        <MKButton
+          onClick={handleGenerateReport}
+          disabled={loading}
+          color="info"
+          sx={{ marginRight: "10px" }}
+        >
+          {loading ? "Loading..." : "Generate Report"}
+        </MKButton>
+        {reportData && (
+          <MKButton onClick={handleDownloadPDF} color="success">
+            Download PDF
+          </MKButton>
+        )}
+      </MKBox>
     </MKBox>
   );
-}
+};
 
-export default NavbarDark;
+export default PlanReport;

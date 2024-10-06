@@ -46,6 +46,12 @@ export default [
         count: 4,
         route: "/sections/attention-catchers/alerts",
       },
+      {
+        image: `${imagesPrefix}/navbars.jpg`,
+        name: "Download Farming Plan in Your Area",
+        count: 6,
+        route: "/sections/navigation/navbars",
+      },
     ],
   },
 ];
